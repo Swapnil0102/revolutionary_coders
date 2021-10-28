@@ -1,14 +1,26 @@
-from flask import Flask
+from flask import request 
+import socket, ssl
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
-file=[]
+@app.route('/')
+def index():
+    return render_template('index.html')
+    # return 'hello google app engine!'
 
-@app.route('/get_json',methods=['POST'])
-def get_json():
-    if request.method=='POST':
-        file.append(request.get_json())
-        return 'hello',204
+@app.route('/products')
+def products():
+    return 'this is product!'
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route('/success', methods = ['POST'])  
+def success():  
+    if request.method == 'POST':  
+        f = request.json['file']  
+        f.save(f.filename)  
+        
+        return render_template("success.html", name = f.filename)  
+
+
+if (__name__=="__main__"):
+    app.run(debug=True,  port=8000)
