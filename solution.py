@@ -12,12 +12,16 @@ def before():
     print("Request Executed")
 
 @app.route('/',methods=['GET','POST'])
-def upload():
-    return render_template(url_for('templates',filename'upload.html'))
+def upload()    
+    print("html works")
+    return render_template('upload.html')
+    #data=request.json
+#def upload():
+ #   return render_template(url_for('templates',filename'upload.html'))
 
 @app.route('/success',methods=['GET','POST'])
 def upload_file():
-    #if request.method=='POST':
+    if request.method=='POST':
     f = request.files['file']
     f.save(secure_filename(f.filename))
     return "file uploaded successfully"
